@@ -35,8 +35,9 @@ public class ProdutoController {
         return "gerenciar_produtos";
     }
 
-    @GetMapping("/editarProduto")
-    public String editarProduto(Produto produto) {
+    @GetMapping("/novoProduto")
+    public String novoProduto(Model model) {
+        model.addAttribute("produto", new Produto());
         return "editar_produto";
     }
 
