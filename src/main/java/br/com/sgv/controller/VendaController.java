@@ -39,6 +39,7 @@ public class VendaController {
     @GetMapping("/novaVenda")
     public String novaVenda(Model model) {
         venda = new Venda();
+        vendaRepository.save(venda);
         model.addAttribute("listaProdutos", produtoRepository.findAll());
         model.addAttribute("venda", venda);
         model.addAttribute("item", new Item());
