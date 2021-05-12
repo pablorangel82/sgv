@@ -5,8 +5,10 @@
  */
 package br.com.sgv.controller;
 
+import br.com.sgv.model.HistoricoPreco;
 import br.com.sgv.model.Produto;
 import br.com.sgv.repository.ProdutoRepository;
+import java.util.Date;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,11 @@ public class ProdutoController {
         if (result.hasErrors()) {
             return "editar_produto";
         }
+        HistoricoPreco hp = new HistoricoPreco();
+        hp.setData(new Date());
+        hp.setValor(produto.getPreco());
+        hp.setProduto(produto);
+        produto.getListaHistoricoPreco().add(hp);
         produtoRepository.save(produto);
         return "redirect:/gerenciarProdutos";
     }
