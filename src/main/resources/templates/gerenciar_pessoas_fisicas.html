@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head> 
+        <meta charset="utf-8"/>
+        <title>Sistema Gerenciador de Vendas (SGV)</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
+    </head>
+    <body>
+        <div th:replace="header :: header">...</div>
+        <div class="container" style="margin-top: 50px; margin-bottom: 20px">
+            <h2 class="alert alert-dark">Gerenciar Pessoas Físicas</h2> 
+            <p class="text-right"><a href="/novaPessoaFisica" class="btn btn-primary"> Nova Pessoa Física </a></p>
+        </div> 
+        <div class="container">
+            <table id="TabelaPessoasFisicas" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Alterar</th>
+                        <th>Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${listaPessoasFisicas}">
+                        <td th:text="${p.idPessoa}"></td>
+                        <td th:text="${p.nome}"></td>
+                        <td th:text="${p.cpf}"></td>
+                        <td><a th:href="@{/editarPessoaFisica/{id}(id=${p.idPessoa})}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+                        <td><a th:href="@{/excluirPessoaFisica/{id}(id=${p.idPessoa})}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script>
+            $(document).ready( function () {
+                $('#TabelaPessoasFisicas').DataTable({
+                    "language": {
+                        "sProcessing":    "Procesando...",
+                        "sLengthMenu":    "Exibir _MENU_ registros por página",
+                        "sZeroRecords":   "Nenhum resultado encontrado",
+                        "sEmptyTable":    "Nenhum resultado encontrado",
+                        "sInfo":          "Exibindo do _START_ até _END_ de um total de _TOTAL_ registros",
+                        "sInfoEmpty":     "Exibindo do 0 até 0 de um total de 0 registros",
+                        "sInfoFiltered":  "(Filtrado de um total de _MAX_ registros)",
+                        "sInfoPostFix":   "",
+                        "sSearch":        "Buscar:",
+                        "sUrl":           "",
+                        "sInfoThousands":  ",",
+                        "sLoadingRecords": "Carregando...",
+                        "oPaginate": {
+                            "sFirst":    "Primeiro",
+                            "sLast":    "Último",
+                            "sNext":    "Próximo",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending":  ": Ativar para ordenar a coluna de maneira ascendente",
+                            "sSortDescending": ": Ativar para ordenar a coluna de maneira descendente"
+                        }
+                    }
+                });
+            } );
+        </script>
+    </body>
+</html>
+
