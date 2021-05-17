@@ -26,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                
                 .authorizeRequests()
                 .antMatchers("/gerenciarUsuarios").access("hasAuthority('ADMIN')")
                 .antMatchers("/editarUsuario").access("hasAuthority('ADMIN')")
@@ -45,6 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.headers()
           .frameOptions()
           .sameOrigin();
+        httpSecurity
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure();
+        
+        
     }
 
     @Override
