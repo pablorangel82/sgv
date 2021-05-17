@@ -11,7 +11,16 @@
     </head>
     <body>
         <div th:replace="header :: header">...</div>
-        
+        <form th:action="@{/efetuarLogout}"  method="post">
+            <div class="container" style="margin-top: 50px; width: 50%;">
+                <h2 class="alert alert-warning"> Tem certeza que deseja fazer o logout, [[${#httpServletRequest.remoteUser}]]?</h2>
+                <div class="row">    
+                    <div class="col">
+                        <hr>
+                        <input type="submit" value="logout" class="btn btn-primary btn-block">    
+                    </div>   
+                </div>
+            </div>
+        </form>
     </body>
-
 </html>

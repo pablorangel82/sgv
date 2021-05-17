@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:th="http://www.thymeleaf.org">
     <head> 
         <meta charset="utf-8"/>
         <title>Sistema Gerenciador de Vendas (SGV)</title>
@@ -12,7 +11,7 @@
     </head>
     <body>
         <div th:replace="header :: header">...</div>
-        <div class="container" style="margin-top: 50px">
+        <div class="container" style="margin-top: 50px; width: 50%;">
             <h2 class="alert alert-dark">Editar Pessoa Jurídica</h2>
             <form action="#" th:action="@{/salvarPessoaJuridica}" th:object="${pessoaJuridica}" method="post">
                 <input type="hidden" th:field="*{idPessoa}" id="idProduto">
