@@ -1,6 +1,5 @@
 package br.com.sgv.model;
 
-import br.com.paim.operation.reasoner.Reasoner;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,28 +64,5 @@ public class Produto implements Serializable {
     @Override
     public String toString() {
         return nome;
-    }
-    
-    public double calcularSugestaoPreco(){
-        float soma = 0;
-        for (HistoricoPreco hp: listaHistoricoPreco){
-            soma = soma + hp.getValor();
-        }
-        float media = soma / listaHistoricoPreco.size();
-        soma = 0;
-        for (HistoricoPreco hp: listaHistoricoPreco){
-            soma = soma + ((hp.getValor() - media) * (hp.getValor() - media));
-        }
-        float coeficienteVariacao = (soma / listaHistoricoPreco.size()) /media;
-        System.out.println("coeficienteVariacao: " + coeficienteVariacao);
-        System.out.println("Numero de alterações de preço: " + listaHistoricoPreco.size());
-        SugestaoDePreco pdp = new SugestaoDePreco();
-        pdp.setNumeroAlteracoesPreco(listaHistoricoPreco.size());
-        pdp.setCoeficienteDeVariacao(coeficienteVariacao);
-        pdp.setData();
-        Reasoner res = new Reasoner(true);
-        res.execute(pdp.getRules());
-        double precoSugerido = (pdp.getResultado() * getPreco()) + getPreco();
-        return  precoSugerido;
     }
 }
