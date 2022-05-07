@@ -19,19 +19,19 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long idUsuario;
+    private long id;
     @Size(min = 1, message = "O login precisa ser válido.")
     @Column(unique = true)
     private String login;
     private String senha;
     private String papel;
 
-    public long getIdUsuario() {
-        return idUsuario;
+    public long getId() {
+        return id;
     }
 
-    public void setIdUsuario(long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getLogin() {

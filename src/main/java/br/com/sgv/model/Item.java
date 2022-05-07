@@ -1,6 +1,5 @@
 package br.com.sgv.model;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,11 +13,11 @@ import javax.persistence.OneToOne;
  * @brief class Item
  */
 @Entity
-public class Item implements Serializable {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long idItem;
+    private long id;
     @OneToOne
     private Produto produto;
     @OneToOne
@@ -30,12 +29,12 @@ public class Item implements Serializable {
         quantidade = 1;
     }
     
-    public long getIdItem() {
-        return idItem;
+    public long getId() {
+        return id;
     }
 
-    public void setIdItem(long idItem) {
-        this.idItem = idItem;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Produto getProduto() {

@@ -17,8 +17,8 @@
         <div th:replace="header :: header">...</div>
         <div class="container" style="margin-top: 50px; width: 50%;">
             <h2 class="alert alert-dark">Editar Usuario</h2>
-            <form action="#" th:action="@{/salvarUsuario}" th:object="${usuario}" method="post">
-                <input type="hidden" th:field="*{idUsuario}" id="idUsuario">
+            <form action="#" th:action="@{/usuarios}" th:object="${usuario}" method="post">
+                <input type="hidden" th:field="*{id}" id="id">
                 <hr>
                 <h3> Dados do Usuario:</h3>
                 <hr>
@@ -47,14 +47,14 @@
                 </div>    
                 <hr class="mb-4">
                 <input type="submit" value="Salvar" class="btn btn-success btn-block">
-                <a href="/gerenciarUsuarios" class="btn btn-secondary btn-block" >Fechar</a>
+                <a href="/usuarios" class="btn btn-secondary btn-block" >Fechar</a>
             </form>
         </div>
         <script>
             $(document).ready( function () {
                 $('#TabelaItens').DataTable({
                     "language": {
-                        "sProcessing":    "Procesando...",
+                        "sProcessing":    "Processando...",
                         "sLengthMenu":    "Exibir _MENU_ registros por página",
                         "sZeroRecords":   "Nenhum resultado encontrado",
                         "sEmptyTable":    "Nenhum resultado encontrado",

@@ -17,8 +17,8 @@
         <div th:replace="header :: header">...</div>
         <div class="container" style="margin-top: 50px; width: 50%;">
             <h2 class="alert alert-dark">Editar Produto</h2>
-            <form action="#" th:action="@{/salvarProduto}" th:object="${produto}" method="post">
-                <input type="hidden" th:field="*{idProduto}" id="idProduto">
+            <form action="#" th:action="@{/produtos}" th:object="${produto}" method="post">
+                <input type="hidden" th:field="*{id}" id="id">
                 <hr>
                 <h3> Dados do Produto:</h3>
                 <hr>
@@ -36,44 +36,16 @@
                     </div>    
                     <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}" class="alert alert-warning"></span>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label for="preco">Preço Sugerido:</label>
-                        <input type="number" disabled="true" min="0" th:value="*{calcularSugestaoPreco()}" id="precoSugerido" class="form-control">
-                    </div>    
-                    <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}" class="alert alert-warning"></span>
-                </div>
-                <h3> Histórico de Preço:</h3>
-                <hr>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <table id="TabelaItens" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="hp : ${produto.listaHistoricoPreco}" th:field="*{listaHistoricoPreco}">
-                                    <td th:text="${hp.data}"></td>
-                                    <td th:text="${hp.valor}"></td>
-                               </tr>
-                            </tbody>
-                        </table>
-                    </div>    
-                    <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}" class="alert alert-warning"></span>
-                </div>    
                 <hr class="mb-4">
                 <input type="submit" value="Salvar" class="btn btn-success btn-block">
-                <a href="/gerenciarProdutos" class="btn btn-secondary btn-block" >Fechar</a>
+                <a href="/produtos" class="btn btn-secondary btn-block" >Fechar</a>
             </form>
         </div>
         <script>
             $(document).ready( function () {
                 $('#TabelaItens').DataTable({
                     "language": {
-                        "sProcessing":    "Procesando...",
+                        "sProcessing":    "Processando...",
                         "sLengthMenu":    "Exibir _MENU_ registros por página",
                         "sZeroRecords":   "Nenhum resultado encontrado",
                         "sEmptyTable":    "Nenhum resultado encontrado",

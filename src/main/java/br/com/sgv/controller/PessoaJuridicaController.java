@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,37 +25,37 @@ public class PessoaJuridicaController {
     @Autowired
     private PessoaJuridicaRepository pessoaJuridicaRepository;
 
-    @GetMapping("/gerenciarPessoasJuridicas")
-    public String listarPessoasJuridicas(Model model) {
+    @GetMapping("/pessoas-juridicas")
+    public String listar(Model model) {
         model.addAttribute("listaPessoasJuridicas", pessoaJuridicaRepository.findAll());
         return "gerenciar_pessoas_juridicas";
     }
 
-    @GetMapping("/novaPessoaJuridica")
-    public String novaPessoaJuridica(Model model) {
+    @GetMapping("/pessoas-juridicas/novo")
+    public String novo(Model model) {
         model.addAttribute("pessoaJuridica", new PessoaJuridica());
         return "editar_pessoa_juridica";
     }
 
-    @GetMapping("/editarPessoaJuridica/{id}")
-    public String editarPessoaJuridica(@PathVariable("id") long idPessoa, Model model) {
-        Optional<PessoaJuridica> pessoaJuridica = pessoaJuridicaRepository.findById(idPessoa);
+    @GetMapping("/pessoas-juridicas/{id}")
+    public String editar(@PathVariable("id") long id, Model model) {
+        Optional<PessoaJuridica> pessoaJuridica = pessoaJuridicaRepository.findById(id);
         model.addAttribute("pessoaJuridica", pessoaJuridica.get());
         return "editar_pessoa_juridica";
     }
 
-    @PostMapping("/salvarPessoaJuridica")
-    public String salvarPessoaJuridica(@Valid PessoaJuridica pessoaJuridica, BindingResult result) {
+    @PostMapping("/pessoas-juridicas")
+    public String salvar(@Valid PessoaJuridica pessoaJuridica, BindingResult result) {
         if (result.hasErrors()) {
             return "editar_pessoa_juridica";
         }
         pessoaJuridicaRepository.save(pessoaJuridica);
-        return "redirect:/gerenciarPessoasJuridicas";
+        return "redirect:/pessoas-juridicas";
     }
 
-    @GetMapping("/excluirPessoaJuridica/{id}")
-    public String excluirPessoaJuridica(@PathVariable("id") long idPessoa) {
-        pessoaJuridicaRepository.deleteById(idPessoa);
-        return "redirect:/gerenciarPessoasJuridicas";
+    @DeleteMapping("/pessoas-juridicas/{id}")
+    public String excluir(@PathVariable("id") long id) {
+        pessoaJuridicaRepository.deleteById(id);
+        return "redirect:/pessoas-juridicas";
     }
 }

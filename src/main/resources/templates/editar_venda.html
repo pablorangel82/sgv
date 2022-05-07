@@ -19,8 +19,8 @@
             <h2 class="alert alert-dark">Editar Venda</h2>
 	    <div class="row" >
                 <div class="col">
-                    <form action="#" th:action="@{/salvarVenda}" th:object="${venda}" method="post">
-                        <input type="hidden" th:field="*{idVenda}" id="idVenda">
+                    <form action="#" th:action="@{/vendas}" th:object="${venda}" method="post">
+                        <input type="hidden" th:field="*{id}" id="id">
                         <h3> Dados da Venda:</h3>
                         <hr>
                         <div class="row">
@@ -40,10 +40,10 @@
                                     </thead>
                                     <tbody>
                                         <tr th:each="i : ${venda.listaItens}" th:field="*{listaItens}">
-                                            <td th:text="${i.idItem}"></td>
+                                            <td th:text="${i.id}"></td>
                                             <td th:text="${i.produto}"></td>
                                             <td th:text="${i.quantidade}"></td>
-                                            <td><a th:href="@{/removerItem/{id}(id=${i.idItem})}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                                            <td><a th:href="@{/vendas/itens/{id}(id=${i.id})}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -51,11 +51,11 @@
                         </div>
                         <hr >
                         <input type="submit" value="Salvar" class="btn btn-success btn-block">
-                        <a href="/gerenciarVendas" class="btn btn-secondary btn-block" >Fechar</a>
+                        <a href="/vendas" class="btn btn-secondary btn-block" >Fechar</a>
                     </form>
                 </div>
                 <div class="col">
-                    <form th:action="@{/adicionarItem}" th:object="${item}" method="post">
+                    <form th:action="@{/vendas/itens}" th:object="${item}" method="post">
                         <h3> Adicionar novos produtos</h3>
                         <hr>
                         <div class="row" >
@@ -63,7 +63,7 @@
                                 <label for="quantidade">Produtos</label>
                                 <select class="form-control" id="comboProdutos" th:field="*{produto}">
                                     <option value="0">Selecione o Produto</option>
-                                    <option th:each="p : ${listaProdutos}" th:value="${p.idProduto}" th:text="${p.nome}" ></option>
+                                    <option th:each="p : ${listaProdutos}" th:value="${p.id}" th:text="${p.nome}" ></option>
                                 </select>    
                             </div>    
                             <div class="col">

@@ -25,17 +25,17 @@ import javax.persistence.OneToMany;
 public class Venda implements Serializable{
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long idVenda;
+    private long id;
     @OneToMany (mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> listaItens = new ArrayList();
     private Date dataVenda = new Date();
 
-    public long getIdVenda() {
-        return idVenda;
+    public long getId() {
+        return id;
     }
 
-    public void setIdVenda(long idVenda) {
-        this.idVenda = idVenda;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public List<Item> getListaItens() {

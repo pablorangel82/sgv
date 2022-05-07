@@ -17,7 +17,7 @@
         <div th:replace="header :: header">...</div>
         <div class="container" style="margin-top: 50px; margin-bottom: 20px">
             <h2 class="alert alert-dark">Gerenciar Produtos</h2> 
-            <p class="text-right"><a href="/novoProduto" class="btn btn-primary"> Novo Produto </a></p>
+            <p class="text-right"><a href="/produtos/novo" class="btn btn-primary"> Novo Produto </a></p>
         </div> 
         <div class="container">
             <table id="TabelaProdutos" class="table table-striped">
@@ -32,11 +32,15 @@
                 </thead>
                 <tbody>
                     <tr th:each="p : ${listaProdutos}">
-                        <td th:text="${p.idProduto}"></td>
+                        <td th:text="${p.id}"></td>
                         <td th:text="${p.nome}"></td>
                         <td th:text="${p.preco}"></td>
-                        <td><a th:href="@{/editarProduto/{id}(id=${p.idProduto})}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
-                        <td><a th:href="@{/excluirProduto/{id}(id=${p.idProduto})}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                        <td><a th:href="@{/produtos/{id}(id=${p.id})}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+                        <td>
+                            <form action="#" th:action="@{/produtos/{id}(id=${p.id})}" th:method="delete">
+                                <button type="submit" id="deleteButton" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -45,7 +49,7 @@
             $(document).ready( function () {
                 $('#TabelaProdutos').DataTable({
                     "language": {
-                        "sProcessing":    "Procesando...",
+                        "sProcessing":    "Processando...",
                         "sLengthMenu":    "Exibir _MENU_ registros por página",
                         "sZeroRecords":   "Nenhum resultado encontrado",
                         "sEmptyTable":    "Nenhum resultado encontrado",

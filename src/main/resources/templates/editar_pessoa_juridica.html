@@ -13,8 +13,8 @@
         <div th:replace="header :: header">...</div>
         <div class="container" style="margin-top: 50px; width: 50%;">
             <h2 class="alert alert-dark">Editar Pessoa Jurídica</h2>
-            <form action="#" th:action="@{/salvarPessoaJuridica}" th:object="${pessoaJuridica}" method="post">
-                <input type="hidden" th:field="*{idPessoa}" id="idProduto">
+            <form action="#" th:action="@{/pessoas-juridicas}" th:object="${pessoaJuridica}" method="post">
+                <input type="hidden" th:field="*{id}" id="id">
                 <hr class="mb-4">
                 <div class="row">
                     <div class="col-md-12 mb-3">
@@ -32,7 +32,7 @@
                 </div>
                 <hr class="mb-4">
                 <input type="submit" value="Salvar" class="btn btn-success btn-block">
-                <a href="/gerenciarPessoasJuridicas" class="btn btn-secondary btn-block" >Fechar</a>
+                <a href="/pessoas-juridicas" class="btn btn-secondary btn-block" >Fechar</a>
             </form>
         </div>
     </body>

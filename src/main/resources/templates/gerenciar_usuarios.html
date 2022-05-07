@@ -17,7 +17,7 @@
         <div th:replace="header :: header">...</div>
         <div class="container" style="margin-top: 50px; margin-bottom: 20px">
             <h2 class="alert alert-dark">Gerenciar Usuarios</h2> 
-            <p class="text-right"><a href="/novoUsuario" class="btn btn-primary"> Novo Usuario </a></p>
+            <p class="text-right"><a href="/usuarios/novo" class="btn btn-primary"> Novo Usuario </a></p>
         </div> 
         <div class="container">
             <table id="TabelaUsuarios" class="table table-striped">
@@ -33,12 +33,16 @@
                 </thead>
                 <tbody>
                     <tr th:each="u : ${listaUsuarios}">
-                        <td th:text="${u.idUsuario}"></td>
+                        <td th:text="${u.id}"></td>
                         <td th:text="${u.login}"></td>
                         <td th:text="${u.senha}"></td>
                         <td th:text="${u.papel}"></td>
-                        <td><a th:href="@{/editarUsuario/{id}(id=${u.idUsuario})}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
-                        <td><a th:href="@{/excluirUsuario/{id}(id=${u.idUsuario})}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                        <td><a th:href="@{/usuarios/{id}(id=${u.id})}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+                        <td>
+                            <form action="#" th:action="@{/usuarios/{id}(id=${u.id})}" th:method="delete">
+                                <button type="submit" id="deleteButton" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>

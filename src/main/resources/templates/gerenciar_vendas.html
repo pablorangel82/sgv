@@ -17,7 +17,7 @@
         <div th:replace="header :: header">...</div>
         <div class="container" style="margin-top: 50px; margin-bottom: 20px">
             <h2 class="alert alert-dark">Gerenciar Vendas</h2> 
-            <p class="text-right"><a href="/novaVenda" class="btn btn-primary"> Nova Venda </a></p>
+            <p class="text-right"><a href="/vendas/novo" class="btn btn-primary"> Nova Venda </a></p>
         </div> 
         <div class="container">
             <table id="TabelaVendas" class="table table-striped">
@@ -32,11 +32,15 @@
                 </thead>
                 <tbody>
                     <tr th:each="v : ${listaVendas}">
-                        <td th:text="${v.idVenda}"></td>
+                        <td th:text="${v.id}"></td>
                         <td th:text="${v.getDataVendaFormatada()}"></td>
                         <td th:text="${v.calcularTotal()}"></td>
-                        <td><a th:href="@{/editarVenda/{id}(id=${v.idVenda})}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
-                        <td><a th:href="@{/excluirVenda/{id}(id=${v.idVenda})}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                        <td><a th:href="@{/vendas/{id}(id=${v.id})}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+                        <td>
+                            <form action="#" th:action="@{/vendas/{id}(id=${v.id})}" th:method="delete">
+                                <button type="submit" id="deleteButton" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>

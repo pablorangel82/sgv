@@ -28,9 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 
                 .authorizeRequests()
-                .antMatchers("/gerenciarUsuarios").access("hasAuthority('ADMIN')")
-                .antMatchers("/editarUsuario").access("hasAuthority('ADMIN')")
-                .antMatchers("/novoUsuario").access("hasAuthority('ADMIN')")
+                .antMatchers("/usuarios/**").access("hasAuthority('ADMIN')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -74,5 +72,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
