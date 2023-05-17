@@ -1,12 +1,15 @@
 package br.com.sgv.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
 
 /**
  *
@@ -15,6 +18,8 @@ import javax.validation.constraints.Size;
  * @brief  class Pessoa
  */
 @Entity
+@Getter
+@Setter
 @Inheritance (strategy=InheritanceType.JOINED)
 public abstract class Pessoa{
     
@@ -24,22 +29,6 @@ public abstract class Pessoa{
     @Size(min=1,message = "O nome precisa ser válido.")
     private String nome;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    
     @Override
     public String toString(){
         return nome;

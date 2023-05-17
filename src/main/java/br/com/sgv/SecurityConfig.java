@@ -4,11 +4,16 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  *
@@ -18,47 +23,60 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     @Autowired
     private DataSource dataSource;
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                
-                .authorizeRequests()
-                .antMatchers("/usuarios/**").access("hasAuthority('ADMIN')")
+                .authorizeHttpRequests(requests -> requests
+                .requestMatchers("/usuarios/**").hasRole("ADMIN")
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
+                )
+                .formLogin(form -> form
                 .loginProcessingUrl("/efetuarLogin")
                 .loginPage("/login").permitAll()
                 .usernameParameter("login")
                 .passwordParameter("senha")
-                .and()
-                .logout().logoutUrl("/efetuarLogout").permitAll();
-
-        httpSecurity.csrf()
-          .ignoringAntMatchers("/h2-console/**");
+                )
+                .logout(logout -> logout
+                .permitAll()
+                .logoutUrl("/logout"))
+                .headers(headers -> headers.frameOptions().disable())
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")));
         httpSecurity.headers()
-          .frameOptions()
-          .sameOrigin();
+                .frameOptions()
+                .sameOrigin();
         httpSecurity
                 .requiresChannel()
                 .anyRequest()
                 .requiresSecure();
-        
-        
+
+        return httpSecurity.build();
     }
 
-    @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("select login as username, senha as password, true"
-                        + " from Usuario where login=?")
-                .authoritiesByUsernameQuery("select login as username, papel as role"
-                        + " from Usuario where login=?");
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/webjars/**");
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
     }
 
     public DataSource getDataSource() {
@@ -68,8 +86,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-    @Bean   
+
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new CustomUserDetailService();
     }
 }

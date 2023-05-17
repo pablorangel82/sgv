@@ -1,7 +1,9 @@
 package br.com.sgv.model;
 
-import javax.persistence.Entity;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -10,16 +12,10 @@ import javax.validation.constraints.Size;
  * @brief  class PessoaJuridica
  */
 @Entity
+@Getter
+@Setter
 public class PessoaJuridica extends Pessoa{
     @Size(min=1,message = "O CNPJ precisa ser válido.")
     private String cnpj;
 
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-    
 }

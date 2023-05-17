@@ -2,8 +2,8 @@ package br.com.sgv.controller;
 
 import br.com.sgv.model.Usuario;
 import br.com.sgv.repository.UsuarioRepository;
+import jakarta.validation.Valid;
 import java.util.Optional;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

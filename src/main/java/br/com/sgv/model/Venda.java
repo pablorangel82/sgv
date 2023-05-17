@@ -1,5 +1,11 @@
 package br.com.sgv.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,12 +14,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
+
 
 /**
  *
@@ -22,6 +25,8 @@ import javax.persistence.OneToMany;
  * @brief  class Venda
  */
 @Entity
+@Getter
+@Setter
 public class Venda implements Serializable{
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -30,22 +35,6 @@ public class Venda implements Serializable{
     private List<Item> listaItens = new ArrayList();
     private Date dataVenda = new Date();
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public List<Item> getListaItens() {
-        return listaItens;
-    }
-
-    public void setListaItens(List<Item> listaItens) {
-        this.listaItens = listaItens;
-    }
-    
     public String getDataVendaFormatada() {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         return formato.format(dataVenda);
